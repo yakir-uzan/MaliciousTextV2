@@ -14,7 +14,7 @@ class MongoFetcher:
         self.collection = self.db[self.collection_name]
 
     # שליפת ה100 הודעות האחרונות בכל פעם
-    def fetch_nessagas(self):
+    def fetch_messagas(self):
         messages = list(self.collection.find().sort("createdate", -1).limit(100))
         for msg in messages:
             msg["_id"] = str(msg["_id"])
