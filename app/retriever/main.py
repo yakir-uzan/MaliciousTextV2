@@ -1,5 +1,5 @@
-from app.retriever.fetcher import MongoFetcher
-from app.retriever.producer import KafkaPublisher
+from fetcher import MongoFetcher
+from producer import KafkaPublisher
 import time
 
 # יצירת מופעים של המחלקות
@@ -11,12 +11,16 @@ def run():
         messages = fetcher.fetch_messagas()
         for msg in messages:
             # בודקת אם הערך הוא אנטישמי ואם כן יוצרת טופיק כזה
-            if msg.get("antisemietic") == 1:
+            if msg.get("Antisemitic") == 1:
                 topic = "raw_tweets_antisemitic"
             else:
                 topic = "raw_tweets_not_antisemitic"
+            # מדפיס את ההודעות לשם בדיקה שהכל עובד
+            print(f"🧾 Message: {msg}")
+
             # שולח את ההודעות לקאפקה
             publisher.publish(topic, msg)
+
         # מחכה 60 שניות עד השליחה הבאה
         time.sleep(60)
 
