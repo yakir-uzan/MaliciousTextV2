@@ -15,8 +15,11 @@ def run():
                 topic = "raw_tweets_antisemitic"
             else:
                 topic = "raw_tweets_not_antisemitic"
+            # המרת ערך createData לסטרינג
+            msg["CreateDate"] = msg["CreateDate"].strftime("%d/%m/%Y %H:%M:%S")
+
             # מדפיס את ההודעות לשם בדיקה שהכל עובד
-            print(f"🧾 Message: {msg}")
+            print(f"Message: {msg}")
 
             # שולח את ההודעות לקאפקה
             publisher.publish(topic, msg)
