@@ -11,7 +11,7 @@ lemmatizer = WordNetLemmatizer()
 class cleaner:
     def __init__(self, text):
         self.text = text
-        pass
+
 
     def Punctuation_shpichel_cleaning(self, text):
         # Implement text cleaning logic here
@@ -41,11 +41,17 @@ class cleaner:
         lemmatized_tokens = [lemmatizer.lemmatize(token) for token in tokens]
         return ' '.join(lemmatized_tokens)
 
+    def get_text(self, ):
+
+        text = self.Punctuation_shpichel_cleaning(self.text)
+        text = self.Cleaning_unnecessary_characters(text)
+        text = self.lower_case(text)
+        text = self.stop_words(text)
+        text = self.lemmatization(text)
+        return text
+
 text = "   Hello!!! This is a SIMPLE, messy   text with numbers 12345, a URL https://example.com and some stop words like THE, AND, IN. Let's see if it works :)"
 a= cleaner(text)
-test = a.Punctuation_shpichel_cleaning(a.text)
-test = a.Cleaning_unnecessary_characters(test)
-test = a.stop_words(test)
-test = a.lower_case(test)
-test = a.lemmatization(test)
+test = a.get_text()
+
 print(test)
