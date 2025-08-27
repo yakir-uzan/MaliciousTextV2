@@ -8,7 +8,7 @@ nltk.download('omw-1.4')
 lemmatizer = WordNetLemmatizer()
 
 # Define the cleaner class
-class cleaner:
+class Cleaner:
     def __init__(self, text):
         self.text = text
 
@@ -51,7 +51,7 @@ class cleaner:
         return text
 
 text = "   Hello!!! This is a SIMPLE, messy   text with numbers 12345, a URL https://example.com and some stop words like THE, AND, IN. Let's see if it works :)"
-a= cleaner(text)
+a= Cleaner(text)
 test = a.get_text()
 
 print(test)
