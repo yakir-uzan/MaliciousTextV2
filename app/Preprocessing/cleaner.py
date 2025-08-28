@@ -50,8 +50,3 @@ class Cleaner:
         text = self.lemmatization(text)
         return text
 
-text = "   Hello!!! This is a SIMPLE, messy   text with numbers 12345, a URL https://example.com and some stop words like THE, AND, IN. Let's see if it works :)"
-a= Cleaner(text)
-test = a.get_text()
-
-print(test)
