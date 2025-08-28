@@ -1,11 +1,11 @@
 from app.Preprocessing.cleaner import  Cleaner
 from app.Preprocessing.consumer import  Consumer
-
+from app.Preprocessing.producer import KafkaPublisher
 
 class Main:
     def __init__(self):
         self.text_consumer = Consumer()
-
+        self.text_producer = KafkaPublisher()
 
     def process_messages(self):
         # Subscribe to two topics
@@ -18,8 +18,8 @@ class Main:
 
                 print("--------------------------------------------------")
                 print(f" Topic: {topic}")
-                print(f" Original: {original_text}")
-                print(f" Cleaned: {cleaned_text}")
+                # print(f" Original: {original_text}")
+                # print(f" Cleaned: {cleaned_text}")
 
                 yield {
                     'topic': topic,
@@ -37,8 +37,36 @@ class Main:
             self.text_consumer.consumer.close()
 
 
+
+    def pruducer_message(self):
+        for processed_message in self.process_messages():
+            topic = processed_message['topic']
+            original_text = processed_message['original_text']
+            cleaned_text = processed_message['cleaned_text']
+            timestamp = processed_message['timestamp']
+
+            # שליחת ההודעה המעובדת לטופיק המתאים
+            if topic == "raw_tweets_antisemitic":
+                self.text_producer.last_publish("preprocessed_tweets_antisemitic", {
+                    "original_text": original_text,
+                    'cleaned_text': cleaned_text,
+                    'timestamp': timestamp
+                })
+                print(f"Sent cleaned message to topic {topic}")
+            elif topic == "raw_tweets_not_antisemitic":
+                self.text_producer.last_publish("preprocessed_tweets_not_antisemitic", {
+                    "original_text": original_text,
+                    'cleaned_text': cleaned_text,
+                    'timestamp': timestamp
+                })
+                print(f"Sent cleaned message to topic {topic}")
+
+
+
+
 if __name__ == "__main__":
     main_processor = Main()
+    main_processor.pruducer_message()
 
     # אופציה 1: שימוש ב-generator
     for processed_message in main_processor.process_messages():
