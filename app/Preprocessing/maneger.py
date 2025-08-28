@@ -39,6 +39,7 @@ class Main:
 
 
     def pruducer_message(self):
+        # עיבוד ושליחה של הודעות
         for processed_message in self.process_messages():
             topic = processed_message['topic']
             original_text = processed_message['original_text']
@@ -68,7 +69,4 @@ if __name__ == "__main__":
     main_processor = Main()
     main_processor.pruducer_message()
 
-    # אופציה 1: שימוש ב-generator
-    for processed_message in main_processor.process_messages():
-        # עשה משהו עם כל הודעה מעובדת
-        print(f"נתקבל טקסט מנוקה: {processed_message['cleaned_text'][:50]}...")
+
